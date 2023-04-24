@@ -21,12 +21,14 @@ class AverageRate(APIView):
             if not cal.is_working_day(datetime.strptime(kwargs['date'], '%Y-%m-%d')):
                 return HttpResponse("Date is not a working day")
         except:
-            return HttpResponse("Invalid date format")
+            return HttpResponse("Invalid date format. Should be YYYY-MM-DD")
+
+        # check if date is in range
 
         try:
             response = response.json()
         except:
-            return HttpResponse("Invalid date or currency code")
+            return HttpResponse("Invalid currency code or date is out of range")
         
         return HttpResponse(response['rates'][0]['mid'])
        
